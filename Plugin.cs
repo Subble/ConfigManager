@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Subble.Core;
+using Subble.Core.Config;
 using Subble.Core.Logger;
 using Subble.Core.Plugin;
 
@@ -24,7 +26,14 @@ namespace ConfigManager
 
         public bool Initialize(ISubbleHost host)
         {
-            return true;
+            if (host is null)
+                return false;
+
+            var logger = host.ServiceContainer.GetService<ILogger>();
+            var folder = Environment.CurrentDirectory;
+
+            var config = new Config(folder, host, logger);
+            return host.ServiceContainer.RegisterService<IConfigManager>(config, Version);
         }
     }
 }
