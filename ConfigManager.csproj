@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Plugin</AssemblyName>
+    <AssemblyName>Plugin.8a26b5f8-3d25-440c-8da9-c3f0bed34232</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
