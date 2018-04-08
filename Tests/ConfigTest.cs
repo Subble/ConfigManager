@@ -22,9 +22,9 @@ namespace ConfigManager.Tests
         public void TestConfigInit()
         {
             var host = GetHostMock();
-            var folderName = "TestConfigManager";
+            const string folderName = "TestConfigManager";
 
-            var config = new Config("TestConfigManager", host, None<ILogger>());
+            var config = new Config(folderName, host, None<ILogger>());
 
             Assert.IsNotNull(config);
             Assert.IsInstanceOfType(config, typeof(IConfigManager));
@@ -33,10 +33,13 @@ namespace ConfigManager.Tests
             const string stringValue = "StringValue1ç";
             config.Set(stringKey, stringValue);
 
+            var config2 = new Config(folderName, host, None<ILogger>());
 
+            var testStringValue = config2.Get<string>(stringKey);
 
-            var testStringValue = config.Get<string>(stringKey);
-            Assert.AreEqual(stringValue, testStringValue);
+            testStringValue
+                .Some(v => Assert.AreEqual(stringValue, v))
+                .None(() => Assert.Fail("No value was found for key:" + stringKey));
         }
 
     }

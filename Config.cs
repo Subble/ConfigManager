@@ -78,7 +78,7 @@ namespace ConfigManager
         {
             string ToConfigEntry(string k, string v) => $"{k}={v}";
             var configEntries = _store.Select(e => ToConfigEntry(e.Key, e.Value));
-            File.WriteAllLinesAsync(ConfigFilePath, configEntries);
+            File.WriteAllLines(ConfigFilePath, configEntries);
         }
 
         private Dictionary<string, string> LoadStore(string[] lines)
