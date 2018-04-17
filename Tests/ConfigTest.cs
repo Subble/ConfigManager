@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿#if DEBUG
+using Xunit;
 using Moq;
 using Subble.Core;
 using Subble.Core.Config;
@@ -8,7 +9,6 @@ using static Subble.Core.Func.Option;
 
 namespace ConfigManager.Tests
 {
-    [TestClass]
     public class ConfigTest
     {
         private ISubbleHost GetHostMock()
@@ -18,7 +18,7 @@ namespace ConfigManager.Tests
             return mock.Object;
         }
 
-        [TestMethod]
+        [Fact]
         public void TestConfigInit()
         {
             var host = GetHostMock();
@@ -26,8 +26,8 @@ namespace ConfigManager.Tests
 
             var config = new Config(folderName, host, None<ILogger>());
 
-            Assert.IsNotNull(config);
-            Assert.IsInstanceOfType(config, typeof(IConfigManager));
+            Assert.NotNull(config);
+            Assert.True(config is IConfigManager);
 
             const string stringKey = "test.string";
             const string stringValue = "StringValue1ç";
@@ -38,9 +38,10 @@ namespace ConfigManager.Tests
             var testStringValue = config2.Get<string>(stringKey);
 
             testStringValue
-                .Some(v => Assert.AreEqual(stringValue, v))
-                .None(() => Assert.Fail("No value was found for key:" + stringKey));
+                .Some(v => Assert.Equal(stringValue, v))
+                .None(() => Assert.True(false, "No value was found for key:" + stringKey));
         }
 
     }
 }
+#endif
