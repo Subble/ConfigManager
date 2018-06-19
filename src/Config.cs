@@ -9,6 +9,8 @@ using System.Linq;
 using static Subble.Core.Logger.SubbleLog;
 using static Subble.Core.Events.EventsType.Core;
 using static Subble.Core.Func.Option;
+using static System.Convert;
+using System;
 
 namespace ConfigManager
 {
@@ -40,21 +42,25 @@ namespace ConfigManager
             return true;
         }
 
-        public Option<T> Get<T>(string key)
+        public Option<T> Get<T>(string key) where T: IConvertible
         {
             if (!_store.ContainsKey(key))
                 return None<T>();
 
-            var value = System.Convert.ChangeType(_store[key], typeof(T));
+            var value = ChangeType(_store[key], typeof(T));
             return Some(value).ToTyped<T>();
         }
 
-        public bool IsAvaible(string key)
+        public bool IsAvailable(string key)
             => _store.ContainsKey(key);
 
-        public void Set<T>(string key, T value)
+        public void Set<T>(string key, T value) where T: IConvertible
         {
-            _store[key] = value.ToString();
+            var convertType = ChangeType(value, typeof(string)) as string;
+            if(convertType is null)
+                throw new InvalidCastException($"Type ${typeof(T)} convert instance to null string");
+
+            _store[key] = convertType;
             SaveConfiguration();
         }
 
