@@ -13,7 +13,7 @@ namespace ConfigManager
             => new PluginInfo();
 
         public SemVersion Version
-            => new SemVersion(0, 0, 1);
+            => new SemVersion(0, 1, 0);
 
         public long LoadPriority => 5;
 

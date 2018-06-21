@@ -7,7 +7,7 @@ namespace ConfigManager
     {
         public string GUID => "8a26b5f8-3d25-440c-8da9-c3f0bed34232";
 
-        public string Name => "ConfigationManager";
+        public string Name => "ConfigurationManager";
 
         public string Creator => "David Pires";
 
