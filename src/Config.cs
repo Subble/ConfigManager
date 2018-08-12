@@ -128,5 +128,17 @@ namespace ConfigManager
                 .None(DefaultLog)
                 .Some(l => l.LogWarning("IConfigManager", message));
         }
+
+        public T Get<T>(string key, T defaultValue) where T : IConvertible
+        {
+            // try to get value
+            var res = Get<T>(key);
+
+            // if there are no value, the default one is set
+            res.None(() => Set(key, defaultValue));
+
+            // return the value
+            return res.HasValue(out var val) ? val : defaultValue;
+        }
     }
 }
