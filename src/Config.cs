@@ -20,11 +20,11 @@ namespace ConfigManager
         private readonly Option<ILogger> _logger;
         private readonly Dictionary<string, string> _store;
 
-        public Config(string folder, ISubbleHost host, Option<ILogger> logger)
+        public Config(ISubbleHost host, Option<ILogger> logger)
         {
             _host = host;
 
-            ConfigFilePath = BuildFilePath(folder);
+            ConfigFilePath = BuildFilePath(host.WorkingDirectory.FullName);
             _logger = logger;
             _store = LoadStore(ReadSettingsFile(ConfigFilePath));
         }

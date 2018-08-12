@@ -30,9 +30,8 @@ namespace ConfigManager
                 return false;
 
             var logger = host.ServiceContainer.GetService<ILogger>();
-            var folder = Environment.CurrentDirectory;
 
-            var config = new Config(folder, host, logger);
+            var config = new Config(host, logger);
             return host.ServiceContainer.RegisterService<IConfigManager>(config, Version);
         }
     }

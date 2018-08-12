@@ -22,9 +22,8 @@ namespace ConfigManager.Tests
         public void TestConfigInit()
         {
             var host = GetHostMock();
-            const string folderName = "TestConfigManager";
 
-            var config = new Config(folderName, host, None<ILogger>());
+            var config = new Config(host, None<ILogger>());
 
             Assert.NotNull(config);
             Assert.True(config is IConfigManager);
@@ -33,7 +32,7 @@ namespace ConfigManager.Tests
             const string stringValue = "StringValue1ç";
             config.Set(stringKey, stringValue);
 
-            var config2 = new Config(folderName, host, None<ILogger>());
+            var config2 = new Config(host, None<ILogger>());
 
             var testStringValue = config2.Get<string>(stringKey);
 
