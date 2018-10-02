@@ -15,6 +15,8 @@ namespace ConfigManager.Tests
         {
             var mock = new Mock<ISubbleHost>();
 
+            mock.SetupGet(h => h.WorkingDirectory).Returns(new DirectoryInfo("."));
+
             return mock.Object;
         }
 
